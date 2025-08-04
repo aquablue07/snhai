@@ -13,13 +13,13 @@ The goal is to build a system that accurately mimics these rules while being fle
 For regulatory and auditing purposes, the provided explanations must be verifiably tied back to the specific business rules.
 
 3. Design Decisions
-Based on the requirements and iterative testing, we made the following key design decisions:
+Based on the requirements and iterative testing, I made the following key design decisions:
 
-Hybrid Model Architecture: We chose a hybrid system that uses a fine-tuned classifier (FinBERT) for the decision and a deterministic script for the reasoning. This approach uses the LLM for its strength in pattern recognition while using the script to guarantee that the explanations are 100% accurate and auditable according to the business logic. This provides the flexibility of an AI model with the reliability of a rule-based system.
+Hybrid Model Architecture: I chose a hybrid system that uses a fine-tuned classifier (FinBERT) for the decision and a deterministic script for the reasoning. This approach uses the LLM for its strength in pattern recognition while using the script to guarantee that the explanations are 100% accurate and auditable according to the business logic. This provides the flexibility of an AI model with the reliability of a rule-based system.
 
-Model Selection (ProsusAI/finbert): We selected a BERT-based model pre-trained on a large corpus of financial text. As the task involves specific financial terminology, a domain-specific model like FinBERT has a significant "head start" and can learn the classification task more efficiently from a smaller dataset than a general-purpose model.
+Model Selection (ProsusAI/finbert): I selected a BERT-based model pre-trained on a large corpus of financial text. As the task involves specific financial terminology, a domain-specific model like FinBERT has a significant "head start" and can learn the classification task more efficiently from a smaller dataset than a general-purpose model.
 
-Parameter-Efficient Fine-Tuning (LoRA): We chose to implement LoRA for the training process. LoRA is vastly more efficient in terms of computational resources (VRAM, time) and storage, as it only trains a small fraction of the model's parameters (less than 1%). It provides performance comparable to a full fine-tune, making the solution more practical and scalable.
+Parameter-Efficient Fine-Tuning (LoRA): I chose to implement LoRA for the training process. LoRA is vastly more efficient in terms of computational resources (VRAM, time) and storage, as it only trains a small fraction of the model's parameters (less than 1%). It provides performance comparable to a full fine-tune, making the solution more practical and scalable.
 
 Synthetic Data Generation: We developed a script to generate a balanced dataset from the rules. This process includes creating specific "hard cases" to teach the model about rule precedence and using descriptive reasons for APPROVE outcomes to reduce model bias. This ensures the model is trained on controlled, high-quality data that covers all decision types.
 
