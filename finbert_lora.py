@@ -78,4 +78,4 @@ trainer.train()
 trainer.save_model(OUTPUT_DIR)
 tokenizer.save_pretrained(OUTPUT_DIR)
 
-print(f"✅ FinBERT LoRA training complete. Model saved to '{OUTPUT_DIR}'.")
+print(f"FinBERT LoRA training complete. Model saved to '{OUTPUT_DIR}'.")
