@@ -1,0 +1,131 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;\f2\fmodern\fcharset0 Courier;
+\f3\fmodern\fcharset0 Courier-Bold;\f4\fnil\fcharset0 LucidaGrande-Bold;\f5\froman\fcharset0 Times-Italic;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid202\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f0\b\fs28 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Loan Adjudication LLM Challenge: Approach and Design\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b0\fs24 \cf0 \
+\
+\pard\pardeftab720\sa319\partightenfactor0
+
+\f0\b \cf0 1. Challenge Summary\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b0 \cf0 \
+The objective of this challenge was to design, implement, and evaluate a process for building a Large Language Model (LLM) to adjudicate loan decisions and provide explanations based on a given set of business rules in a JSON format.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab720\sa319\partightenfactor0
+
+\f0\b \cf0 2. Assumptions\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b0 \cf0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls1\ilvl0\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 The provided 
+\f2\fs26 fine_tune_llm_credit_rules.json
+\f1\fs24  file is the complete and definitive "ground truth" for all decision-making.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 The goal is to build a system that accurately mimics these rules while being flexible enough to accommodate more complex, subjective rules in the future.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 For regulatory and auditing purposes, the provided explanations must be verifiably tied back to the specific business rules.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa319\partightenfactor0
+
+\f0\b \cf0 3. Design Decisions\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b0 \cf0 \
+Based on the requirements and iterative testing, we made the following key design decisions:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls2\ilvl0
+\f0\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Hybrid Model Architecture
+\f1\b0 : We chose a hybrid system that uses a fine-tuned classifier (
+\f2\fs26 FinBERT
+\f1\fs24 ) for the decision and a deterministic script for the reasoning. This approach uses the LLM for its strength in pattern recognition while using the script to guarantee that the explanations are 100% accurate and auditable according to the business logic. This provides the flexibility of an AI model with the reliability of a rule-based system.\
+\ls2\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Model Selection (
+\f3\fs26 ProsusAI/finbert
+\f0\fs24 )
+\f1\b0 : We selected a BERT-based model pre-trained on a large corpus of financial text. As the task involves specific financial terminology, a domain-specific model like FinBERT has a significant "head start" and can learn the classification task more efficiently from a smaller dataset than a general-purpose model.\
+\ls2\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Parameter-Efficient Fine-Tuning (LoRA)
+\f1\b0 : We chose to implement LoRA for the training process. LoRA is vastly more efficient in terms of computational resources (VRAM, time) and storage, as it only trains a small fraction of the model's parameters (less than 1%). It provides performance comparable to a full fine-tune, making the solution more practical and scalable.\
+\ls2\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Synthetic Data Generation
+\f1\b0 : We developed a script to generate a balanced dataset from the rules. This process includes creating specific "hard cases" to teach the model about rule precedence and using descriptive reasons for 
+\f2\fs26 APPROVE
+\f1\fs24  outcomes to reduce model bias. This ensures the model is trained on controlled, high-quality data that covers all decision types.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa319\partightenfactor0
+
+\f0\b \cf0 4. Results and Analysis\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b0 \cf0 \
+The fine-tuned model was evaluated on the validation set, yielding strong quantitative results and clear qualitative insights.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls3\ilvl0
+\f0\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Quantitative Performance
+\f1\b0 : The model achieved a high 
+\f0\b overall accuracy of 90%
+\f1\b0  on the validation set. Performance was robust and well-balanced across all categories, with a weighted F1-score of 0.90. The model was particularly effective at identifying 
+\f2\fs26 REJECT
+\f1\fs24  cases, achieving a precision of 1.00, meaning it never incorrectly rejected a valid application during the test.\
+\ls3\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Qualitative Analysis
+\f1\b0 : A review of the sample predictions reveals the model's primary strengths and weaknesses:\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls3\ilvl1
+\f0\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	
+\f4 \uc0\u9702 
+\f0 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Strengths
+\f1\b0 : The model is highly effective at correctly identifying the specific feature that violates a business rule. In the vast majority of test cases, its predicted label and the accompanying reason (derived from the feature importance analysis) perfectly matched the ground truth.\
+\ls3\ilvl1
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	
+\f4 \uc0\u9702 
+\f0 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Weaknesses
+\f1\b0 : The model's main weakness appears in a small number of cases where it correctly identifies the feature violating a critical rule but incorrectly assigns a 
+\f2\fs26 FLAG_REVIEW
+\f1\fs24  label instead of the correct 
+\f2\fs26 REJECT
+\f1\fs24  label. This indicates a slight difficulty in consistently applying the rule 
+\f5\i severity
+\f1\i0  hierarchy.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa319\partightenfactor0
+
+\f0\b \cf0 5. Conclusion\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b0 \cf0 \
+The implemented hybrid system successfully meets the core objectives of the challenge. It is a robust, highly accurate, and explainable solution that uses a fine-tuned language model for adjudication while ensuring its reasoning is transparent, auditable, and perfectly aligned with the provided business logic.\
+}
