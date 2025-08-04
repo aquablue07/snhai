@@ -38,3 +38,13 @@ Weaknesses: The model's main weakness appears in a small number of cases where i
 Notes:
 
 Also tried google/flan-t5-small, google/flan-t5-base, AdaptLLM/finance-LLM, flang etc but did not work for various reasons.
+
+Initially explored end-to-end generative models like FLAN-T5 to produce both a decision and a reason in a single step. However, ensuring a probabilistic model would perfectly adhere to a strict rule hierarchy proved challenging.
+
+This led to the final hybrid approach, which was determined to be the most robust solution(considering the resources in hand- using cpu) This system uses:
+
+A specialized classifier, ProsusAI/finbert, fine-tuned with LoRA to make the APPROVE, REJECT, or FLAG_REVIEW prediction.
+
+To connect the model's decision to the reasoning, I implemented a simple feature-importance analysis (occlusion) after finding that more complex XAI libraries like SHAP had critical incompatibilities with the development environment.
+
+This hybrid design was ultimately chosen because it leverages the LLM's strength in pattern recognition while using a simple script to guarantee the explanations are 100% accurate and compliant with the business logic. This provides the optimal balance of AI flexibility and the auditable reliability required for a financial application.
