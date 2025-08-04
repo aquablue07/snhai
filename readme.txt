@@ -65,5 +65,5 @@ If you prefer to run each step individually:
 * `synthetic_data.py`: Script to generate the training and validation datasets.
 * `finbert_finetune_lora.py`: Script to fine-tune the FinBERT model using LoRA.
 * `eval_by_importances.py`: Script to evaluate the trained model and analyze its reasoning.
-* finbert2.py : finetuned finbert
+* finberttrain.py : finetuned finbert
 
