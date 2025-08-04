@@ -215,12 +215,12 @@ for i in range(100, 120):    # can change the idx from 0 till 400
             print(f" Top influential words: {', '.join([f'{word}({score:.3f})' for word, score in top_words[:3]])}")
             
     except Exception as e:
-        print(f"\n▶ Input: {raw_input}")
+        print(f" Input: {raw_input}")
         print(f" Analysis failed: {str(e)}")
         print(f" Ground Truth: {row['output_text']}")
 
 # --- Detailed Analysis for One Example ---
-print("\n🔍 Detailed Analysis for One Example:")
+print("\n Detailed Analysis for One Example:")
 
 sample_idx = 105
 sample_row = val_dataset[sample_idx]
