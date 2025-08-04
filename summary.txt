@@ -5,6 +5,7 @@ The objective of this challenge was to design, implement, and evaluate a process
 
 
 2. Assumptions
+The provided rules are deterministic. Assumption is made that the input will not follow similar pattern all the time.
 The provided fine_tune_llm_credit_rules.json file is the complete and definitive "ground truth" for all decision-making.
 The rules follow this heirarchy ( reject(critical) > reject( major) > flag)
 
