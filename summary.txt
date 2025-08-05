@@ -49,3 +49,126 @@ A specialized classifier, ProsusAI/finbert, fine-tuned with LoRA to make the APP
 To connect the model's decision to the reasoning, I implemented a simple feature-importance analysis (occlusion) after finding that more complex XAI libraries like SHAP had critical incompatibilities with the development environment.
 
 This hybrid design was ultimately chosen because it leverages the LLM's strength in pattern recognition while using a simple script to guarantee the explanations are 100% accurate and compliant with the business logic. This provides the optimal balance of AI flexibility and the auditable reliability required for a financial application.
+
+
+Appendix: 
+
+ Classification Report:
+              precision    recall  f1-score   support
+
+     APPROVE       0.88      0.88      0.88       136
+      REJECT       1.00      0.90      0.95       121
+ FLAG_REVIEW       0.85      0.92      0.88       143
+
+    accuracy                           0.90       400
+   macro avg       0.91      0.90      0.90       400
+weighted avg       0.90      0.90      0.90       400
+
+
+📈 Generating Confusion Matrix...
+
+📝 Sample Predictions with FinBERT:
+
+▶ Input: classify: age: 32, credit_score: 829, income: 46648, dti: 28, employment: employed_full_time, employment_months: 60, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 32653.6
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 39, credit_score: 619, income: 113301, dti: 45, employment: retired, employment_months: 74, residency: US_Citizen, bankruptcy: False, bank_account: False, loan_amount: 22298
+🟢 Predicted: REJECT – Minimum Credit Score
+🎯 Ground Truth: REJECT – Minimum Credit Score
+
+▶ Input: classify: age: 58, credit_score: 839, income: 45088, dti: 21, employment: employed_full_time, employment_months: 117, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 31561.6
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 47, credit_score: 735, income: 47961, dti: 14, employment: employed_full_time, employment_months: 21, residency: US_Citizen, bankruptcy: False, bank_account: False, loan_amount: 25985
+🟢 Predicted: REJECT – Verifiable Bank Account
+🎯 Ground Truth: REJECT – Verifiable Bank Account
+
+▶ Input: classify: age: 36, credit_score: 798, income: 57519, dti: 27, employment: employed_full_time, employment_months: 97, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 40263.299999999996
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 28, credit_score: 712, income: 41513, dti: 25, employment: employed_full_time, employment_months: 64, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 29059.1
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 41, credit_score: 605, income: 42085, dti: 21, employment: self_employed, employment_months: 10, residency: US_Citizen, bankruptcy: False, bank_account: True, loan_amount: 76145
+🟢 Predicted: FLAG_REVIEW – Minimum Credit Score
+🎯 Ground Truth: REJECT – Minimum Credit Score
+
+▶ Input: classify: age: 70, credit_score: 599, income: 109482, dti: 36, employment: employed_part_time, employment_months: 43, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 8557
+🟢 Predicted: REJECT – Minimum Credit Score
+🎯 Ground Truth: REJECT – Minimum Credit Score
+
+▶ Input: classify: age: 49, credit_score: 784, income: 133838, dti: 66, employment: self_employed, employment_months: 33, residency: Visa_Holder, bankruptcy: True, bank_account: False, loan_amount: 54542
+🟢 Predicted: REJECT – Maximum Debt-to-Income Ratio (DTI)
+🎯 Ground Truth: REJECT – Maximum Debt-to-Income Ratio (DTI)
+
+▶ Input: classify: age: 33, credit_score: 776, income: 56669, dti: 23, employment: employed_full_time, employment_months: 93, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 39668.299999999996
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 61, credit_score: 709, income: 65476, dti: 51, employment: retired, employment_months: 25, residency: US_Citizen, bankruptcy: False, bank_account: True, loan_amount: 87891
+🟢 Predicted: FLAG_REVIEW – Maximum Debt-to-Income Ratio (DTI)
+🎯 Ground Truth: REJECT – Maximum Debt-to-Income Ratio (DTI)
+
+▶ Input: classify: age: 33, credit_score: 731, income: 53081, dti: 22, employment: employed_full_time, employment_months: 41, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 37156.7
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 45, credit_score: 848, income: 57162, dti: 31, employment: employed_full_time, employment_months: 91, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 40013.399999999994
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 60, credit_score: 728, income: 137437, dti: 15, employment: employed_part_time, employment_months: 102, residency: Permanent_Resident, bankruptcy: True, bank_account: False, loan_amount: 75602
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 20, credit_score: 574, income: 122939, dti: 51, employment: employed_full_time, employment_months: 60, residency: Permanent_Resident, bankruptcy: False, bank_account: True, loan_amount: 65147
+🟢 Predicted: FLAG_REVIEW – Minimum Credit Score
+🎯 Ground Truth: REJECT – Minimum Credit Score
+
+▶ Input: classify: age: 41, credit_score: 839, income: 54112, dti: 23, employment: employed_full_time, employment_months: 59, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 37878.399999999994
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 54, credit_score: 543, income: 124711, dti: 62, employment: employed_full_time, employment_months: 109, residency: US_Citizen, bankruptcy: True, bank_account: False, loan_amount: 20798
+🟢 Predicted: REJECT – Minimum Credit Score
+🎯 Ground Truth: REJECT – Minimum Credit Score
+
+▶ Input: classify: age: 60, credit_score: 819, income: 42620, dti: 34, employment: employed_full_time, employment_months: 56, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 29833.999999999996
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 19, credit_score: 570, income: 40424, dti: 40, employment: retired, employment_months: 105, residency: US_Citizen, bankruptcy: False, bank_account: True, loan_amount: 29549
+🟢 Predicted: FLAG_REVIEW – Minimum Credit Score
+🎯 Ground Truth: REJECT – Minimum Credit Score
+
+▶ Input: classify: age: 66, credit_score: 664, income: 68123, dti: 36, employment: retired, employment_months: 49, residency: Permanent_Resident, bankruptcy: False, bank_account: False, loan_amount: 16242
+🟢 Predicted: REJECT – Minimum Credit Score
+🎯 Ground Truth: REJECT – Minimum Credit Score
+
+▶ Input: classify: age: 26, credit_score: 708, income: 49326, dti: 23, employment: employed_full_time, employment_months: 43, residency: US_Citizen, bankruptcy: True, bank_account: True, loan_amount: 34528.2
+🟢 Predicted: REJECT – No Recent Bankruptcy Filing
+🎯 Ground Truth: REJECT – No Recent Bankruptcy Filing
+
+▶ Input: classify: age: 33, credit_score: 779, income: 125474, dti: 49, employment: employed_full_time, employment_months: 78, residency: Visa_Holder, bankruptcy: False, bank_account: False, loan_amount: 96159
+🟢 Predicted: REJECT – Maximum Debt-to-Income Ratio (DTI)
+🎯 Ground Truth: REJECT – Maximum Debt-to-Income Ratio (DTI)
+
+▶ Input: classify: age: 56, credit_score: 846, income: 131749, dti: 39, employment: retired, employment_months: 100, residency: US_Citizen, bankruptcy: False, bank_account: True, loan_amount: 85467
+🟢 Predicted: FLAG_REVIEW – Loan Amount within Income Ratio
+🎯 Ground Truth: FLAG_REVIEW – Loan Amount within Income Ratio
+
+▶ Input: classify: age: 53, credit_score: 729, income: 66309, dti: 19, employment: retired, employment_months: 99, residency: US_Citizen, bankruptcy: False, bank_account: True, loan_amount: 76255
+🟢 Predicted: FLAG_REVIEW – Loan Amount within Income Ratio
+🎯 Ground Truth: FLAG_REVIEW – Loan Amount within Income Ratio
+
+▶ Input: classify: age: 64, credit_score: 789, income: 74568, dti: 36, employment: employed_part_time, employment_months: 83, residency: Permanent_Resident, bankruptcy: False, bank_account: True, loan_amount: 89180
+🟢 Predicted: FLAG_REVIEW – Loan Amount within Income Ratio
+🎯 Ground Truth: FLAG_REVIEW – Loan Amount within Income Ratio
+
+▶ Input: classify: age: 20, credit_score: 739, income: 92936, dti: 33, employment: retired, employment_months: 72, residency: US_Citizen, bankruptcy: False, bank_account: True, loan_amount: 10892
+🟢 Predicted: APPROVE – Key requirements met (as per model)
+🎯 Ground Truth: APPROVE – Key requirements met
